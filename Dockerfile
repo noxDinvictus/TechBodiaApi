@@ -1,11 +1,11 @@
-# Use .NET 9.0 ASP.NET runtime as the base layer
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+# Use .NET 7.0 ASP.NET runtime as the base layer
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-# Use .NET 9.0 SDK for building the project
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+# Use .NET 7.0 SDK for building the project
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["TechBodiaApi.csproj", "."]
 RUN dotnet restore "./TechBodiaApi.csproj"
