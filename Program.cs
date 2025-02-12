@@ -13,12 +13,24 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("Database connection string is missing. Please check the environment variables.");
+}
+
 builder.Services.AddDbContext<TechBodiaContext>(options =>
     options.UseSqlServer(connectionString));
 
 // JWT Authentication Configuration
 var jwtSettings = configuration.GetSection("Jwt");
-var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+
+var jwtKey = jwtSettings["Key"];
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new Exception("JWT key is missing from configuration. Please check the environment variables.");
+}
+
+var key = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -55,7 +67,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials(); // If needed for authentication
+              .AllowCredentials();
     });
 });
 
