@@ -1,0 +1,47 @@
+# Visual Studio-specific
+.vs/
+
+# User-specific settings
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build and output directories
+bin/
+obj/
+out/
+TestResults/
+Debug/
+Release/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Logs and caches
+*.log
+*.cache
+*.ldb
+
+# Rider and JetBrains IDEs
+.idea/
+*.sln.iml
+
+# ASP.NET and Blazor-related
+appsettings.*.json
+appsettings.json
+secrets.json
+
+# Entity Framework migrations
+Migrations/
+
+# Resharper and other IDE-specific files
+*.DotSettings.user
+_ReSharper.Caches/
+
+# Azure and deployment
+publish/
+.vscode/
