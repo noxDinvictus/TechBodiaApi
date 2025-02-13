@@ -12,11 +12,11 @@ namespace TechBodiaApi.Controllers
 {
     [Authorize]
     [Route("/notes")]
-    public class NoteContoller : BaseController
+    public class NoteController : BaseController
     {
         private readonly INoteServices noteService;
 
-        public NoteContoller(INoteServices noteService)
+        public NoteController(INoteServices noteService)
         {
             this.noteService = noteService;
         }
