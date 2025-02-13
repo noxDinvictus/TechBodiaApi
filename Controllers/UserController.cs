@@ -46,6 +46,5 @@ namespace TechBodiaApi.Controllers
                 return HandleError(ex);
             }
         }
-
     }
 }

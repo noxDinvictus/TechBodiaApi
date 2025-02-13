@@ -14,6 +14,7 @@ namespace TechBodiaApi.Services.Models.DTO
 
         [JsonIgnore]
         public IQueryable<ItemType> BaseItems { get; set; }
+
         public IEnumerable<DtoItemType> Items { get; set; }
 
         public MetaDTO Meta { get; set; }

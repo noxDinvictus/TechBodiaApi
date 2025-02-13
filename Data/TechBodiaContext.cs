@@ -8,7 +8,9 @@ namespace TechBodiaApi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Note> Notes { get; set; }
 
-        public TechBodiaContext(DbContextOptions<TechBodiaContext> options) : base(options) { }
+        public TechBodiaContext(DbContextOptions<TechBodiaContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -5,12 +5,12 @@ namespace TechBodiaApi.Controllers
 {
     public class BaseController : ControllerBase
     {
-
         public class ResultOk<T>
         {
             public T Result { get; set; }
             public int StatusCode { get; set; }
         }
+
         protected ActionResult Success()
         {
             return Ok();
@@ -32,7 +32,7 @@ namespace TechBodiaApi.Controllers
 
         protected Guid GetCurrentUserId()
         {
-            var userIdClaim = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             if (!string.IsNullOrEmpty(userIdClaim) && Guid.TryParse(userIdClaim, out Guid userId))
             {

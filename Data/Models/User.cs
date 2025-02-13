@@ -10,6 +10,7 @@ namespace TechBodiaApi.Data.Models
 
         [Required]
         public string Username { get; set; } = string.Empty;
+
         public byte[] PasswordHash { get; set; } = new byte[64];
         public byte[] PasswordSalt { get; set; } = new byte[128];
         public DateTime CreatedAt { get; set; }

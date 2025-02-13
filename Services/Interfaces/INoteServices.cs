@@ -9,9 +9,13 @@ namespace TechBodiaApi.Services.Interfaces
     public interface INoteServices
     {
         Task<DTO> Create(Payload dto, Guid userId);
+
         DTO GetById(Guid noteId);
+
         ListResultDTO<Model, DTO, Filter> GetAllFiltered(Guid userId, Filter filter);
+
         Task<DTO> Update(Payload dto, Guid Id);
+
         void Delete(Guid noteId);
     }
 }
