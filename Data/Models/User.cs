@@ -7,10 +7,11 @@ namespace TechBodiaApi.Data.Models
     {
         [Key]
         public Guid UserId { get; set; }
+
         [Required]
         public string Username { get; set; } = string.Empty;
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; } = new byte[64];
+        public byte[] PasswordSalt { get; set; } = new byte[128];
         public DateTime CreatedAt { get; set; }
 
         public UserDTO ToDto()
