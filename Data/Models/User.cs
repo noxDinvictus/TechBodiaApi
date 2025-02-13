@@ -9,8 +9,8 @@ namespace TechBodiaApi.Data.Models
         public Guid UserId { get; set; }
         [Required]
         public string Username { get; set; } = string.Empty;
-        [Required]
-        public string Password { get; set; } = string.Empty;
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public UserDTO ToDto()

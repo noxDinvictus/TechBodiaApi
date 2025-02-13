@@ -12,7 +12,6 @@ namespace TechBodiaApi.Data.Models.Payload
             return new UserDTO
             {
                 Username = Username,
-                Password = Password,
             };
         }
     }
