@@ -38,7 +38,7 @@ authService.ConfigureServices(builder.Services);
 
 // Register Services, db tables
 // NOTE: newlly creaetd table should be added here
-var collectionService = new TablesService();
+var collectionService = new ScopeServices();
 collectionService.ConfigureServices(builder.Services);
 
 // Enable CORS
