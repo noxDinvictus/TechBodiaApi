@@ -18,6 +18,6 @@
         public int CurrentPage { get; set; } = 1;
 
         // Default to 1 item per page to ensure at least one result.
-        public int ItemsPerPage { get; set; } = 1;
+        public int ItemsPerPage { get; set; } = 0;
     }
 }
