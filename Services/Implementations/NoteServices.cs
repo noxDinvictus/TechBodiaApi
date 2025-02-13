@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TechBodiaApi.Data;
-using TechBodiaApi.Data.Models.DTO;
 using TechBodiaApi.Services.Interfaces;
+using TechBodiaApi.Services.Models.DTO;
 using DTO = TechBodiaApi.Data.Models.DTO.NoteDTO;
 using Filter = TechBodiaApi.Data.Models.Filters.NoteFilter;
+using Model = TechBodiaApi.Data.Models.Note;
 using Payload = TechBodiaApi.Data.Models.Payload.NotePayload;
 
 namespace TechBodiaApi.Services.Implementations
@@ -16,6 +17,7 @@ namespace TechBodiaApi.Services.Implementations
         {
             this.db = db;
         }
+
         public async Task<DTO> Create(Payload dto, Guid userId)
         {
             using var transaction = await db.Database.BeginTransactionAsync();
@@ -46,22 +48,29 @@ namespace TechBodiaApi.Services.Implementations
             {
                 throw new Exception("Item Does Not Exist");
             }
-
             return ret.ToDto();
         }
 
-        public IEnumerable<NoteDTO> GetNotesList(Guid userId, Filter filter)
+        public ListResultDTO<Model, DTO, Filter> GetAllFiltered(Guid userId, Filter filter)
         {
-            var query = db.Notes.Where(x => x.CreatedByUserId == userId);
+            var ret = new ListResultDTO<Model, DTO, Filter>(filter);
+
+            ret.BaseItems = db.Notes.Where(x => x.CreatedByUserId == userId).AsQueryable();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
-                query = query.Where(x => x.Title.Contains(filter.SearchText) || (x.Content != null && x.Content.Contains(filter.SearchText)));
+                ret.BaseItems = ret.BaseItems.Where(x =>
+                    x.Title.Contains(filter.SearchText)
+                    || (x.Content != null && x.Content.Contains(filter.SearchText))
+                );
             }
 
-            return query.ToList().Select(x => x.ToDto());
-        }
+            ret.SetPageAndOrder();
 
+            ret.Items = ret.BaseItems.ToList().Select(x => x.ToDto()).ToList();
+
+            return ret;
+        }
 
         public async Task<DTO> Update(Payload dto, Guid Id)
         {
@@ -111,4 +120,3 @@ namespace TechBodiaApi.Services.Implementations
         }
     }
 }
-
