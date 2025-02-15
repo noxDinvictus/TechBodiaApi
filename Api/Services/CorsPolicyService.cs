@@ -11,7 +11,7 @@
                     policy =>
                     {
                         policy
-                            .WithOrigins("https://localhost:3000", "https://noxdinvictus.github.io")
+                            .WithOrigins("http://localhost:3000", "https://noxdinvictus.github.io")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
