@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechBodiaApi.Api.Attributes;
 using TechBodiaApi.Attributes;
+using TechBodiaApi.Data.Definitions;
 using TechBodiaApi.Services.Interfaces;
 using TechBodiaApi.Services.Models.DTO;
+
 using DTO = TechBodiaApi.Data.Models.DTO.NoteDTO;
 using Filter = TechBodiaApi.Data.Models.Filters.NoteFilter;
 using Model = TechBodiaApi.Data.Models.Note;
@@ -10,10 +12,9 @@ using Payload = TechBodiaApi.Data.Models.Payload.NotePayload;
 
 namespace TechBodiaApi.Controllers
 {
-    [Authorize]
-    [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/notes")]
+    [Roles(Roles.User)]
     public class NoteController : BaseController
     {
         private readonly INoteServices noteService;
