@@ -2,13 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using TechBodiaApi.Attributes;
 using TechBodiaApi.Services.Interfaces;
+
 using DTO = TechBodiaApi.Data.Models.DTO.UserDTO;
 using Payload = TechBodiaApi.Data.Models.Payload.UserPayload;
 
 namespace TechBodiaApi.Controllers
 {
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/users")]
     [AllowAnonymous]
-    [Route("/users")]
     public class UserController : BaseController
     {
         private readonly IUserServices userService;
@@ -34,7 +36,9 @@ namespace TechBodiaApi.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<ActionResult<ResultOk<string>>> GetAuthenticateToken([FromBody] Payload dto)
+        public async Task<ActionResult<ResultOk<string>>> GetAuthenticateToken(
+            [FromBody] Payload dto
+        )
         {
             try
             {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TechBodiaApi.Data.Definitions;
 using TechBodiaApi.Data.Models.DTO;
 
 namespace TechBodiaApi.Data.Models
@@ -14,6 +15,7 @@ namespace TechBodiaApi.Data.Models
         public byte[] PasswordHash { get; set; } = new byte[64];
         public byte[] PasswordSalt { get; set; } = new byte[128];
         public DateTime CreatedAt { get; set; }
+        public Roles Role { get; set; } = Roles.User;
 
         public UserDTO ToDto()
         {
@@ -21,6 +23,7 @@ namespace TechBodiaApi.Data.Models
             {
                 UserId = UserId,
                 Username = Username,
+                Role = Role,
                 CreatedAt = DateTime.UtcNow,
             };
         }
