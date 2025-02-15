@@ -8,7 +8,9 @@ using Payload = TechBodiaApi.Data.Models.Payload.UserPayload;
 namespace TechBodiaApi.Controllers
 {
     [AllowAnonymous]
-    [Route("/users")]
+    [ApiController]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/users")]
     public class UserController : BaseController
     {
         private readonly IUserServices userService;
@@ -34,7 +36,9 @@ namespace TechBodiaApi.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<ActionResult<ResultOk<string>>> GetAuthenticateToken([FromBody] Payload dto)
+        public async Task<ActionResult<ResultOk<string>>> GetAuthenticateToken(
+            [FromBody] Payload dto
+        )
         {
             try
             {

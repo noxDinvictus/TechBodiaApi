@@ -37,7 +37,7 @@ var authService = new AuthService();
 authService.ConfigureServices(builder.Services);
 
 // Register Services, db tables
-// NOTE: newlly creaetd table should be added here
+// NOTE: newly created table should be added here
 var collectionService = new ScopeServices();
 collectionService.ConfigureServices(builder.Services);
 
@@ -48,11 +48,15 @@ corsPolicyService.ConfigureServices(builder.Services);
 // Add Controllers
 builder.Services.AddControllers();
 
+var versioning = new Versioning();
+versioning.ConfigureServices(builder.Services);
+
 // Configure Swagger with JWT support
 var swaggerService = new SwaggerService();
 swaggerService.ConfigureServices(builder.Services);
 
 var app = builder.Build();
+app.UseRouting();
 
 if (app.Environment.IsDevelopment())
 {

@@ -11,7 +11,9 @@ using Payload = TechBodiaApi.Data.Models.Payload.NotePayload;
 namespace TechBodiaApi.Controllers
 {
     [Authorize]
-    [Route("/notes")]
+    [ApiController]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/notes")]
     public class NoteController : BaseController
     {
         private readonly INoteServices noteService;
@@ -52,7 +54,9 @@ namespace TechBodiaApi.Controllers
         }
 
         [HttpPost("list")]
-        public ActionResult<ResultOk<ListResultDTO<Model, DTO, Filter>>> GetAllFiltered([FromBody] Filter filter)
+        public ActionResult<ResultOk<ListResultDTO<Model, DTO, Filter>>> GetAllFiltered(
+            [FromBody] Filter filter
+        )
         {
             try
             {
