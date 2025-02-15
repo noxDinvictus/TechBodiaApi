@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using TechBodiaApi.Attributes;
 using TechBodiaApi.Services.Interfaces;
+
 using DTO = TechBodiaApi.Data.Models.DTO.UserDTO;
 using Payload = TechBodiaApi.Data.Models.Payload.UserPayload;
 
 namespace TechBodiaApi.Controllers
 {
-    [AllowAnonymous]
-    [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/users")]
+    [AllowAnonymous]
     public class UserController : BaseController
     {
         private readonly IUserServices userService;
