@@ -17,7 +17,7 @@
         // Default to the first page in pagination.
         public int CurrentPage { get; set; } = 1;
 
-        // Default to 1 item per page to ensure at least one result.
-        public int ItemsPerPage { get; set; } = 0;
+        // Default to 10 item per page
+        public int ItemsPerPage { get; set; } = 10;
     }
 }
