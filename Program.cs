@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using Delta;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TechBodiaApi.Api;
 using TechBodiaApi.Api.Extenstions;
@@ -55,7 +57,15 @@ versioning.ConfigureServices(builder.Services);
 var swaggerService = new SwaggerService();
 swaggerService.ConfigureServices(builder.Services);
 
+// SOURCE: https://github.com/SimonCropp/Delta?tab=readme-ov-file
+// NOTE: this makes fetching faster
+builder.Services.AddScoped(_ => new SqlConnection(connectionString));
+
 var app = builder.Build();
+
+// SOURCE: https://www.youtube.com/watch?v=sLoTReccvPw
+// NOTE: this makes fetching faster
+app.UseDelta();
 app.UseRouting();
 
 if (app.Environment.IsDevelopment())
