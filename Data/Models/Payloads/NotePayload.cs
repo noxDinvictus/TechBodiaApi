@@ -7,7 +7,7 @@ namespace TechBodiaApi.Data.Models.Payload
         public string Title { get; set; } = string.Empty;
         public string? Content { get; set; }
 
-        public NoteDTO ToDto()
+        public NoteDTO ToDTO()
         {
             return new NoteDTO
             {

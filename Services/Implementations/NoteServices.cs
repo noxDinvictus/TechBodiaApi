@@ -24,7 +24,7 @@ namespace TechBodiaApi.Services.Implementations
 
             try
             {
-                var newItem = payload.ToDto().ToModel();
+                var newItem = payload.ToDTO().ToModel();
                 newItem.CreatedByUserId = userId;
 
                 _db.Notes.Add(newItem);
@@ -85,7 +85,7 @@ namespace TechBodiaApi.Services.Implementations
                     throw new Exception("Item Does Not Exist");
                 }
 
-                var model = payload.ToDto().ToModel();
+                var model = payload.ToDTO().ToModel();
                 model.CreatedAt = existing.CreatedAt;
                 model.CreatedByUserId = existing.CreatedByUserId;
                 model.NoteId = existing.NoteId;

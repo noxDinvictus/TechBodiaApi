@@ -35,7 +35,7 @@ namespace TechBodiaApi.Services.Implementations
                     throw new Exception("Username already exists");
                 }
 
-                var newItem = payload.ToDto().ToModel();
+                var newItem = payload.ToDTO().ToModel();
 
                 byte[] passwordHash, passwordSalt;
                 CreatePasswordHash(payload.Password, out passwordHash, out passwordSalt);

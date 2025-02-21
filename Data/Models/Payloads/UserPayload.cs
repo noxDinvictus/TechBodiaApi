@@ -9,7 +9,7 @@ namespace TechBodiaApi.Data.Models.Payload
         public string Password { get; set; } = string.Empty;
         public Roles Role { get; set; } = Roles.User;
 
-        public UserDTO ToDto()
+        public UserDTO ToDTO()
         {
             return new UserDTO
             {
