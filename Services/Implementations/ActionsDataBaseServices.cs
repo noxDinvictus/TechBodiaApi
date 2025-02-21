@@ -6,6 +6,7 @@ namespace TechBodiaApi.Services.Implementations
     public class ActionsDataBaseServices : IActionsDataBaseServices
     {
         private readonly IConfiguration _config;
+        private string defaultConnection = "DefaultConnection";
 
         public ActionsDataBaseServices()
         {
@@ -27,7 +28,7 @@ namespace TechBodiaApi.Services.Implementations
 
             Directory.CreateDirectory(backupDirectory);
 
-            using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            using var connection = new SqlConnection(_config.GetConnectionString(defaultConnection));
             string backupCommandText = $@"
                     BACKUP DATABASE [{connection.Database}]
                     TO DISK = @BackupFilePath
@@ -45,7 +46,7 @@ namespace TechBodiaApi.Services.Implementations
 
         public async Task<string> RestoreDatabase(string backupFilePath)
         {
-            using var connection = new SqlConnection(_config.GetConnectionString("OnflowDatabase"));
+            using var connection = new SqlConnection(_config.GetConnectionString(defaultConnection));
             string restoreCommandText = $@"
                     USE master;
                     ALTER DATABASE [{connection.Database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
