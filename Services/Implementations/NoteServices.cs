@@ -11,27 +11,27 @@ namespace TechBodiaApi.Services.Implementations
 {
     public class NoteServices : INoteServices
     {
-        private readonly TechBodiaContext db;
+        private readonly TechBodiaContext _db;
 
         public NoteServices(TechBodiaContext db)
         {
-            this.db = db;
+            _db = db;
         }
 
-        public async Task<DTO> Create(Payload dto, Guid userId)
+        public async Task<DTO> Create(Payload payload, Guid userId)
         {
-            using var transaction = await db.Database.BeginTransactionAsync();
+            using var transaction = await _db.Database.BeginTransactionAsync();
 
             try
             {
-                var newItem = dto.ToDto().ToModel();
+                var newItem = payload.ToDto().ToModel();
                 newItem.CreatedByUserId = userId;
 
-                db.Notes.Add(newItem);
-                await db.SaveChangesAsync();
+                _db.Notes.Add(newItem);
+                await _db.SaveChangesAsync();
 
                 await transaction.CommitAsync();
-                return newItem.ToDto();
+                return newItem.ToDTO();
             }
             catch (Exception ex)
             {
@@ -42,20 +42,20 @@ namespace TechBodiaApi.Services.Implementations
 
         public DTO GetById(Guid id)
         {
-            var ret = db.Notes.FirstOrDefault(x => x.NoteId == id);
+            var ret = _db.Notes.FirstOrDefault(x => x.NoteId == id);
 
             if (ret == null)
             {
                 throw new Exception("Item Does Not Exist");
             }
-            return ret.ToDto();
+            return ret.ToDTO();
         }
 
         public ListResultDTO<Model, DTO, Filter> GetAllFiltered(Guid userId, Filter filter)
         {
             var ret = new ListResultDTO<Model, DTO, Filter>(filter);
 
-            ret.BaseItems = db.Notes.Where(x => x.CreatedByUserId == userId).AsQueryable();
+            ret.BaseItems = _db.Notes.Where(x => x.CreatedByUserId == userId).AsQueryable();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
@@ -67,37 +67,37 @@ namespace TechBodiaApi.Services.Implementations
 
             ret.SetPageAndOrder();
 
-            ret.Items = ret.BaseItems.ToList().Select(x => x.ToDto()).ToList();
+            ret.Items = ret.BaseItems.ToList().Select(x => x.ToDTO()).ToList();
 
             return ret;
         }
 
-        public async Task<DTO> Update(Payload dto, Guid Id)
+        public async Task<DTO> Update(Payload payload, Guid Id)
         {
-            using var transaction = await db.Database.BeginTransactionAsync();
+            using var transaction = await _db.Database.BeginTransactionAsync();
 
             try
             {
-                var existing = await db.Notes.FirstOrDefaultAsync(x => x.NoteId == Id);
+                var existing = await _db.Notes.FirstOrDefaultAsync(x => x.NoteId == Id);
 
                 if (existing == null)
                 {
                     throw new Exception("Item Does Not Exist");
                 }
 
-                var model = dto.ToDto().ToModel();
+                var model = payload.ToDto().ToModel();
                 model.CreatedAt = existing.CreatedAt;
                 model.CreatedByUserId = existing.CreatedByUserId;
                 model.NoteId = existing.NoteId;
                 model.UpdatedAt = DateTime.UtcNow;
 
-                db.Entry(existing).State = EntityState.Detached;
-                db.Entry(model).State = EntityState.Modified;
+                _db.Entry(existing).State = EntityState.Detached;
+                _db.Entry(model).State = EntityState.Modified;
 
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return model.ToDto();
+                return model.ToDTO();
             }
             catch (Exception ex)
             {
@@ -108,15 +108,15 @@ namespace TechBodiaApi.Services.Implementations
 
         public void Delete(Guid id)
         {
-            var existing = db.Notes.Find(id);
+            var existing = _db.Notes.Find(id);
 
             if (existing == null)
             {
                 throw new Exception("Item Does Not Exist");
             }
 
-            db.Notes.Remove(existing);
-            db.SaveChanges();
+            _db.Notes.Remove(existing);
+            _db.SaveChanges();
         }
     }
 }

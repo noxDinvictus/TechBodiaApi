@@ -13,41 +13,41 @@ namespace TechBodiaApi.Services.Implementations
 {
     public class UserServices : IUserServices
     {
-        private readonly TechBodiaContext db;
-        private readonly IConfiguration configuration;
+        private readonly TechBodiaContext _db;
+        private readonly IConfiguration _configuration;
 
         public UserServices(TechBodiaContext db, IConfiguration configuration)
         {
-            this.db = db;
-            this.configuration = configuration;
+            _db = db;
+            _configuration = configuration;
         }
 
-        public async Task<DTO> Create(Payload dto)
+        public async Task<DTO> Create(Payload payload)
         {
-            using var transaction = await db.Database.BeginTransactionAsync();
+            using var transaction = await _db.Database.BeginTransactionAsync();
 
             try
             {
                 // Check if the username already exists
-                bool usernameExists = await db.Users.AnyAsync(x => x.Username == dto.Username);
+                bool usernameExists = await _db.Users.AnyAsync(x => x.Username == payload.Username);
                 if (usernameExists)
                 {
                     throw new Exception("Username already exists");
                 }
 
-                var newItem = dto.ToDto().ToModel();
+                var newItem = payload.ToDto().ToModel();
 
                 byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(dto.Password, out passwordHash, out passwordSalt);
+                CreatePasswordHash(payload.Password, out passwordHash, out passwordSalt);
 
                 newItem.PasswordHash = passwordHash;
                 newItem.PasswordSalt = passwordSalt;
 
-                db.Users.Add(newItem);
-                await db.SaveChangesAsync();
+                _db.Users.Add(newItem);
+                await _db.SaveChangesAsync();
 
                 await transaction.CommitAsync();
-                return newItem.ToDto();
+                return newItem.ToDTO();
             }
             catch (Exception ex)
             {
@@ -70,16 +70,16 @@ namespace TechBodiaApi.Services.Implementations
             }
         }
 
-        public async Task<string> GetAuthenticateToken(Payload dto)
+        public async Task<string> GetAuthenticateToken(Payload payload)
         {
-            if (string.IsNullOrEmpty(dto.Username) || string.IsNullOrEmpty(dto.Password))
+            if (string.IsNullOrEmpty(payload.Username) || string.IsNullOrEmpty(payload.Password))
             {
                 throw new ArgumentException("Username and password cannot be empty.");
             }
 
-            var user = await db.Users.FirstOrDefaultAsync(x => x.Username == dto.Username);
+            var user = await _db.Users.SingleOrDefaultAsync(x => x.Username == payload.Username);
 
-            if (user == null || !VerifyPasswordHash(dto.Password, user.PasswordHash, user.PasswordSalt))
+            if (user is null || !VerifyPasswordHash(payload.Password, user.PasswordHash, user.PasswordSalt))
             {
                 throw new UnauthorizedAccessException("Invalid username or password.");
             }
@@ -109,7 +109,7 @@ namespace TechBodiaApi.Services.Implementations
         private string GenerateJwtToken(Model user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
