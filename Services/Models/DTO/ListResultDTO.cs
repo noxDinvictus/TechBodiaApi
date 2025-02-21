@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using TechBodiaApi.Data.Models.DTO;
 using TechBodiaApi.Services.Models.Filters;
 
