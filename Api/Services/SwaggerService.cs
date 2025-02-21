@@ -7,11 +7,10 @@ namespace TechBodiaApi.Api.Extenstions
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TechBodia API", Version = "v1" });
-
-                c.AddSecurityDefinition(
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "TechBodia API", Version = "v1" });
+                options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
                     {
@@ -23,7 +22,7 @@ namespace TechBodiaApi.Api.Extenstions
                     }
                 );
 
-                c.AddSecurityRequirement(
+                options.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
                     {
                         {
