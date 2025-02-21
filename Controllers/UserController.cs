@@ -13,11 +13,11 @@ namespace TechBodiaApi.Controllers
     [AllowAnonymous]
     public class UserController : BaseController
     {
-        private readonly IUserServices userService;
+        private readonly IUserServices _userService;
 
         public UserController(IUserServices userService)
         {
-            this.userService = userService;
+            _userService = userService;
         }
 
         [ApiValidationFilter]
@@ -26,7 +26,7 @@ namespace TechBodiaApi.Controllers
         {
             try
             {
-                var res = await userService.Create(payload);
+                var res = await _userService.Create(payload);
                 return Success(res);
             }
             catch (Exception ex)
@@ -42,7 +42,7 @@ namespace TechBodiaApi.Controllers
         {
             try
             {
-                var res = await userService.GetAuthenticateToken(payload);
+                var res = await _userService.GetAuthenticateToken(payload);
                 return Success(res);
             }
             catch (Exception ex)

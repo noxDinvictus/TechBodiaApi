@@ -17,11 +17,11 @@ namespace TechBodiaApi.Controllers
     [Roles(Roles.User)]
     public class NoteController : BaseController
     {
-        private readonly INoteServices noteService;
+        private readonly INoteServices _noteService;
 
         public NoteController(INoteServices noteService)
         {
-            this.noteService = noteService;
+            _noteService = noteService;
         }
 
         [ApiValidationFilter]
@@ -31,7 +31,7 @@ namespace TechBodiaApi.Controllers
             try
             {
                 var userId = GetCurrentUserId();
-                var res = await noteService.Create(payload, userId);
+                var res = await _noteService.Create(payload, userId);
                 return Success(res);
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace TechBodiaApi.Controllers
         {
             try
             {
-                var res = noteService.GetById(id);
+                var res = _noteService.GetById(id);
                 return Success(res);
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace TechBodiaApi.Controllers
             try
             {
                 var userId = GetCurrentUserId();
-                var res = noteService.GetAllFiltered(userId, filter);
+                var res = _noteService.GetAllFiltered(userId, filter);
                 return Success(res);
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace TechBodiaApi.Controllers
         {
             try
             {
-                var ret = await noteService.Update(payload, id);
+                var ret = await _noteService.Update(payload, id);
                 return Success(ret);
             }
             catch (Exception ex)
@@ -94,7 +94,7 @@ namespace TechBodiaApi.Controllers
         {
             try
             {
-                noteService.Delete(id);
+                _noteService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
