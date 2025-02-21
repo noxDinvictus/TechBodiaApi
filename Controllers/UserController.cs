@@ -22,11 +22,11 @@ namespace TechBodiaApi.Controllers
 
         [ApiValidationFilter]
         [HttpPost]
-        public async Task<ActionResult<ResultOk<DTO>>> Create([FromBody] Payload dto)
+        public async Task<ActionResult<ResultOk<DTO>>> Create([FromBody] Payload payload)
         {
             try
             {
-                var res = await userService.Create(dto);
+                var res = await userService.Create(payload);
                 return Success(res);
             }
             catch (Exception ex)
@@ -37,12 +37,12 @@ namespace TechBodiaApi.Controllers
 
         [HttpPost("authenticate")]
         public async Task<ActionResult<ResultOk<string>>> GetAuthenticateToken(
-            [FromBody] Payload dto
+            [FromBody] Payload payload
         )
         {
             try
             {
-                var res = await userService.GetAuthenticateToken(dto);
+                var res = await userService.GetAuthenticateToken(payload);
                 return Success(res);
             }
             catch (Exception ex)

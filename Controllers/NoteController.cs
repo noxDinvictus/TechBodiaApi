@@ -26,12 +26,12 @@ namespace TechBodiaApi.Controllers
 
         [ApiValidationFilter]
         [HttpPost]
-        public async Task<ActionResult<ResultOk<DTO>>> Create([FromBody] Payload dto)
+        public async Task<ActionResult<ResultOk<DTO>>> Create([FromBody] Payload payload)
         {
             try
             {
                 var userId = GetCurrentUserId();
-                var res = await noteService.Create(dto, userId);
+                var res = await noteService.Create(payload, userId);
                 return Success(res);
             }
             catch (Exception ex)
@@ -54,9 +54,9 @@ namespace TechBodiaApi.Controllers
             }
         }
 
-        [HttpPost("list")]
+        [HttpGet("list")]
         public ActionResult<ResultOk<ListResultDTO<Model, DTO, Filter>>> GetAllFiltered(
-            [FromBody] Filter filter
+            [FromQuery] Filter filter
         )
         {
             try
@@ -75,12 +75,12 @@ namespace TechBodiaApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ResultOk<DTO>>> Update(
             [FromRoute] Guid id,
-            [FromBody] Payload dto
+            [FromBody] Payload payload
         )
         {
             try
             {
-                var ret = await noteService.Update(dto, id);
+                var ret = await noteService.Update(payload, id);
                 return Success(ret);
             }
             catch (Exception ex)
