@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using TechBodiaApi.Data.Models.DTO;
 
 namespace TechBodiaApi.Data.Models
 {
-    public class Note
+    public class Note : BaseClass
     {
         [Key]
         public Guid NoteId { get; set; }
@@ -13,13 +12,8 @@ namespace TechBodiaApi.Data.Models
         public string Title { get; set; } = string.Empty;
 
         public string? Content { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
 
-        [ForeignKey(nameof(User))]
-        public Guid CreatedByUserId { get; set; }
-
-        public NoteDTO ToDto()
+        public NoteDTO ToDTO()
         {
             return new NoteDTO
             {

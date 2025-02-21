@@ -4,7 +4,7 @@ using TechBodiaApi.Data.Models.DTO;
 
 namespace TechBodiaApi.Data.Models
 {
-    public class User
+    public class User : BaseClass
     {
         [Key]
         public Guid UserId { get; set; }
@@ -14,10 +14,9 @@ namespace TechBodiaApi.Data.Models
 
         public byte[] PasswordHash { get; set; } = new byte[64];
         public byte[] PasswordSalt { get; set; } = new byte[128];
-        public DateTime CreatedAt { get; set; }
         public Roles Role { get; set; } = Roles.User;
 
-        public UserDTO ToDto()
+        public UserDTO ToDTO()
         {
             return new UserDTO
             {
