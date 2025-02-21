@@ -49,8 +49,8 @@ collectionService.ConfigureServices(builder.Services);
 var corsPolicyService = new CorsPolicyService();
 corsPolicyService.ConfigureServices(builder.Services, corsPolicyName);
 
-// Add Controllers
-builder.Services.AddControllers();
+var controllerService = new ControllerService();
+controllerService.ConfigureServices(builder.Services);
 
 var versioning = new Versioning();
 versioning.ConfigureServices(builder.Services);
