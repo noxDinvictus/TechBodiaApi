@@ -10,6 +10,7 @@ namespace TechBodiaApi.Api
             // db table services
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<INoteServices, NoteServices>();
+            services.AddScoped<IActionsDataBaseServices, ActionsDataBaseServices>();
         }
     }
 }
