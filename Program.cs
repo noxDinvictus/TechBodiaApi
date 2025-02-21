@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
+const string corsPolicyName = "CORS, you are either Screaming OR Crying :D";
+
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new Exception("Database connection string is missing.");
@@ -45,7 +47,7 @@ collectionService.ConfigureServices(builder.Services);
 
 // Enable CORS
 var corsPolicyService = new CorsPolicyService();
-corsPolicyService.ConfigureServices(builder.Services);
+corsPolicyService.ConfigureServices(builder.Services, corsPolicyName);
 
 // Add Controllers
 builder.Services.AddControllers();
@@ -78,7 +80,7 @@ app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 
 // Apply CORS before authentication & authorization
-app.UseCors("AllowFrontend");
+app.UseCors(corsPolicyName);
 
 app.UseAuthentication();
 app.UseAuthorization();
