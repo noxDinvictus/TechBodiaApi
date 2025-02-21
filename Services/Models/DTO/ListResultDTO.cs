@@ -17,12 +17,12 @@ namespace TechBodiaApi.Services.Models.DTO
 
         public IEnumerable<DtoItemType> Items { get; set; }
 
-        public MetaDTO Meta { get; set; }
+        public MetadataDTO Metadata { get; set; }
 
         public ListResultDTO(FilterType filter)
         {
             Filter = filter;
-            Meta = new MetaDTO();
+            Metadata = new MetadataDTO();
         }
 
         public void SetPageAndOrder(bool ignoreOrdering = false)
@@ -38,7 +38,7 @@ namespace TechBodiaApi.Services.Models.DTO
                 itemsPerPage = Filter.ItemsPerPage >= 1 ? Filter.ItemsPerPage : 10;
             }
 
-            Meta.CurrentPage = Filter.CurrentPage;
+            Metadata.CurrentPage = Filter.CurrentPage;
 
             if (!ignoreOrdering)
             {
@@ -48,15 +48,15 @@ namespace TechBodiaApi.Services.Models.DTO
                 BaseItems = ApplyOrdering(BaseItems, orderByColumn, Filter.OrderByDescending);
             }
 
-            Meta.TotalItems = BaseItems.Count();
+            Metadata.TotalItems = BaseItems.Count();
 
-            BaseItems = BaseItems.Skip((Meta.CurrentPage - 1) * itemsPerPage).Take(itemsPerPage);
+            BaseItems = BaseItems.Skip((Metadata.CurrentPage - 1) * itemsPerPage).Take(itemsPerPage);
 
-            Meta.TotalPages = (int)Math.Ceiling(Meta.TotalItems / (double)itemsPerPage);
+            Metadata.TotalPages = (int)Math.Ceiling(Metadata.TotalItems / (double)itemsPerPage);
 
-            if (Meta.TotalPages == 0)
+            if (Metadata.TotalPages == 0)
             {
-                Meta.TotalPages = 1;
+                Metadata.TotalPages = 1;
             }
         }
 

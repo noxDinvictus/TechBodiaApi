@@ -1,6 +1,6 @@
 ﻿namespace TechBodiaApi.Data.Models.DTO
 {
-    public class MetaDTO
+    public class MetadataDTO
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
