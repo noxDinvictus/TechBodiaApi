@@ -2,19 +2,26 @@
 {
     public class CorsPolicyService
     {
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, string corsPolicyName)
         {
+            var allowedOrigins = new List<string>
+            {
+                "http://localhost:3000",
+                "https://noxdinvictus.github.io",
+            };
+
             services.AddCors(options =>
             {
                 options.AddPolicy(
-                    "AllowFrontend",
+                    corsPolicyName,
                     policy =>
                     {
                         policy
-                            .WithOrigins("http://localhost:3000", "https://noxdinvictus.github.io")
+                            .WithOrigins(allowedOrigins.ToArray())
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .AllowCredentials();
+                            .AllowCredentials()
+                            .Build();
                     }
                 );
             });
