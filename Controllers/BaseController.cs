@@ -27,7 +27,7 @@ namespace TechBodiaApi.Controllers
 
         protected ActionResult HandleError(Exception ex)
         {
-            return StatusCode(500, new { message = ex.Message });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
         }
 
         protected Guid GetCurrentUserId()
