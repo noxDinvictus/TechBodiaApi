@@ -15,7 +15,7 @@
              *
              * User = 'User',
              *
-             * NOTE: for objects you want to be ignored, use "using Newtonsoft.Json"; note "using System.Text.Json.Serialization;"
+             * NOTE: for objects you want to be ignored, use "using Newtonsoft.Json"; not "using System.Text.Json.Serialization;"
              */
             services
                 .AddControllers()
